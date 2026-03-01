@@ -188,6 +188,30 @@
       flex-shrink: 0;
     }
 
+    .pdf-promo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #fff5f0;
+      border-left: 4px solid var(--orange);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      max-width: 440px;
+      width: 100%;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s var(--ease-out) 0.32s both;
+    }
+    .pdf-promo i {
+      font-size: 28px;
+      color: var(--orange);
+      flex-shrink: 0;
+    }
+    .pdf-promo span {
+      font-size: 14px;
+      color: var(--plum);
+      line-height: 1.45;
+    }
+
     .btn-primary {
       display: inline-flex;
       align-items: center;
@@ -297,16 +321,16 @@
     .quiz__body {
       flex: 1;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
-      padding: 40px 24px 64px;
+      padding: 32px 24px 48px;
     }
 
     .question-card {
       background: var(--white);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow-md);
-      padding: 36px 32px 32px;
+      padding: 36px 32px 36px;
       max-width: 560px;
       width: 100%;
     }
@@ -446,19 +470,27 @@
     }
 
     .freebie-pill {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       background: linear-gradient(135deg, #fff5f0, #ffeee6);
-      border: 1px solid rgba(241,87,34,0.25);
-      border-radius: 100px;
-      padding: 8px 16px;
-      font-size: 13px;
+      border: 1px solid rgba(241,87,34,0.3);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--orange);
       margin-bottom: 28px;
+      text-align: left;
     }
-    .freebie-pill i { font-size: 16px; }
+    .freebie-pill i { font-size: 20px; flex-shrink: 0; }
+    .freebie-pill__sub {
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.75;
+      margin-top: 2px;
+      display: block;
+    }
 
     .email-form {
       display: flex;
@@ -822,8 +854,11 @@
     <ul class="hero__bullets" aria-label="Šta dobijaš">
       <li><i class="ph-bold ph-check-circle"></i> 12 pitanja baziranih na medicinskim smjernicama</li>
       <li><i class="ph-bold ph-check-circle"></i> Personalizirani rezultat (Nizak / Srednji / Visok rizik)</li>
-      <li><i class="ph-bold ph-gift"></i> Besplatni PDF vodič o PCOS-u na email</li>
     </ul>
+    <div class="pdf-promo">
+      <i class="ph-bold ph-file-pdf"></i>
+      <span><strong>Besplatni PDF vodič</strong> stiže na tvoj email odmah nakon kviza</span>
+    </div>
     <button class="btn-primary" id="btn-start">
       Počni kviz <i class="ph-bold ph-arrow-right"></i>
     </button>
@@ -864,7 +899,10 @@
       </p>
       <div class="freebie-pill">
         <i class="ph-bold ph-file-pdf"></i>
-        Besplatni PDF: "PCOS – Šta trebam znati"
+        <div>
+          Besplatni PDF: "PCOS – Šta trebam znati"
+          <span class="freebie-pill__sub">Ishrana, hormoni i koračni plan</span>
+        </div>
       </div>
       <form class="email-form" id="email-form" novalidate>
         <div class="input-wrap">
