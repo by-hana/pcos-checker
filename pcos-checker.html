@@ -849,7 +849,7 @@
       Imaš li simptome<br><em>PCOS-a</em>?
     </h1>
     <p class="hero__subtitle">
-      Odgovori na 12 kratkih pitanja i saznaj koliki je tvoj rizik — potpuno besplatno.
+      Odgovori na 12 kratkih pitanja i saznaj koliki je tvoj rizik, potpuno besplatno.
     </p>
     <ul class="hero__bullets" aria-label="Šta dobijaš">
       <li><i class="ph-bold ph-check-circle"></i> 12 pitanja baziranih na medicinskim smjernicama</li>
@@ -863,7 +863,7 @@
       Počni kviz <i class="ph-bold ph-arrow-right"></i>
     </button>
     <p class="hero__disclaimer">
-      <strong>Napomena:</strong> Ovaj kviz je edukativnog karaktera i baziran je na međunarodnim PCOS smjernicama (Rotterdam kriteriji, 2023 PCOS Guideline). Ne predstavlja medicinsku dijagnozu — PCOS zahtijeva laboratorijsku obradu i isključivanje sličnih stanja. Za tačnu dijagnozu obratite se svom ljekaru ili ginekologu.
+      <strong>Napomena:</strong> Ovaj kviz je edukativnog karaktera i baziran je na međunarodnim PCOS smjernicama (Rotterdam kriteriji, 2023 PCOS Guideline). Ne predstavlja medicinsku dijagnozu. PCOS zahtijeva laboratorijsku obradu i isključivanje sličnih stanja. Za tačnu dijagnozu obratite se svom ljekaru ili ginekologu.
     </p>
   </section>
 
@@ -960,7 +960,7 @@
       </p>
       <div class="freebie-box__email-note">
         <i class="ph-bold ph-envelope-simple"></i>
-        <span>Provjeri email — vodič stiže za nekoliko minuta. Provjeri i spam folder ako ga ne vidiš.</span>
+        <span>Provjeri email, vodič stiže za nekoliko minuta. Provjeri i spam folder ako ga ne vidiš.</span>
       </div>
     </div>
 
@@ -1014,7 +1014,7 @@
       ],
     },
     {
-      text: 'Primijetiš li da ti kosa tanje ili više opada?',
+      text: 'Primijetiš li da ti kosa postaje tanja ili više opada?',
       answers: [
         { label: 'Nikad',               value: 0 },
         { label: 'Blago, povremeno',    value: 1 },
@@ -1054,7 +1054,7 @@
       ],
     },
     {
-      text: 'Dijagnosticirane ciste na jajnicima ili pomenuto od liječnika?',
+      text: 'Dijagnosticirane ciste na jajnicima ili pomenuto od ljekara?',
       answers: [
         { label: 'Ne',                          value: 0 },
         { label: 'Pomenuto, nije potvrđeno',    value: 1 },
@@ -1091,9 +1091,9 @@
   const RISK_CONTENT = {
     low: {
       badge:  { label: 'Nizak rizik',   cls: 'risk-badge--low',  icon: 'ph-check-circle' },
-      headline: 'Dobra vijest — nizak rizik!',
+      headline: 'Dobra vijest: nizak rizik!',
       title: 'Tvoji simptomi ne ukazuju na PCOS',
-      body: 'Na osnovu tvojih odgovora, simptomi koje opisuješ nisu tipični za PCOS — to je sjajna vijest. Ipak, imaj na umu da hormonalna ravnoteža nije statična: oko 21% žena s naizgled redovnim ciklusima zapravo ima anovulatorne cikluse. Ako u bilo kom trenutku primijetiš neredovne cikluse, pojačan rast dlaka ili poteškoće s kilažom, vrijedi zakazati pregled. Redovni ginekološki pregledi ostaju važni bez obzira na rezultat ovog kviza.',
+      body: 'Na osnovu tvojih odgovora, simptomi koje opisuješ nisu tipični za PCOS, što je sjajna vijest. Ipak, imaj na umu da hormonalna ravnoteža nije statična: oko 21% žena s naizgled redovnim ciklusima zapravo ima anovulatorne cikluse. Ako u bilo kom trenutku primijetiš neredovne cikluse, pojačan rast dlaka ili poteškoće s kilažom, vrijedi zakazati pregled. Redovni ginekološki pregledi ostaju važni bez obzira na rezultat ovog kviza.',
       ctas: [
         { label: 'Pogledaj naše proizvode', href: CONFIG.SHOP_URL, primary: true, icon: 'ph-shopping-bag' },
         { label: 'Zakaži preventivni pregled', href: CONFIG.BOOKING_URL, primary: false, icon: 'ph-calendar' },
@@ -1103,7 +1103,7 @@
       badge:  { label: 'Srednji rizik',  cls: 'risk-badge--mid',  icon: 'ph-warning' },
       headline: 'Vrijedi obratiti pažnju.',
       title: 'Neki simptomi se poklapaju s PCOS-om',
-      body: 'Tvoji odgovori ukazuju na određene simptome koji se mogu vezati za PCOS. To ne znači nužno dijagnozu — mnogi ovi simptomi imaju i druge uzroke. Preporučujemo razgovor s ginekologom ili endokrinologom. Laboratorijske analize (hormoni, inzulin, ultrazvuk jajnika) mogu dati jasnu sliku. U međuvremenu, stvori dobre navike: regularna tjelesna aktivnost i smanjenje šećera mogu značajno poboljšati hormonalnu ravnotežu.',
+      body: 'Tvoji odgovori ukazuju na određene simptome koji se mogu vezati za PCOS. To ne znači nužno dijagnozu, jer mnogi ovi simptomi imaju i druge uzroke. Preporučujemo razgovor s ginekologom ili endokrinologom. Laboratorijske analize (hormoni, inzulin, ultrazvuk jajnika) mogu dati jasnu sliku. U međuvremenu, stvori dobre navike: regularna tjelesna aktivnost i smanjenje šećera mogu značajno poboljšati hormonalnu ravnotežu.',
       ctas: [
         { label: 'Zakaži konsultaciju', href: CONFIG.BOOKING_URL, primary: true, icon: 'ph-calendar' },
         { label: 'Pogledaj naše proizvode', href: CONFIG.SHOP_URL, primary: false, icon: 'ph-shopping-bag' },
@@ -1113,7 +1113,7 @@
       badge:  { label: 'Visok rizik',   cls: 'risk-badge--high', icon: 'ph-warning-circle' },
       headline: 'Preporučujemo posjet liječniku.',
       title: 'Tvoji simptomi snažno ukazuju na PCOS',
-      body: 'Na osnovu tvojih odgovora, imaš više simptoma koji su karakteristični za PCOS. Ovo je važan korak — saznati na vrijeme znači moći na vrijeme djelovati. Preporučujemo da što prije zakaž pregled kod ginekologa ili endokrinologa. Donesi ovaj rezultat sa sobom. PCOS je upravljivo stanje — s pravim pristupom (ishrana, stres management, po potrebi terapija), mnoge žene žive puno i zdravo. Nisi sama.',
+      body: 'Na osnovu tvojih odgovora, imaš više simptoma koji su karakteristični za PCOS. Ovo je važan korak: saznati na vrijeme znači moći na vrijeme djelovati. Preporučujemo da što prije zakaž pregled kod ginekologa ili endokrinologa. Donesi ovaj rezultat sa sobom. PCOS je upravljivo stanje. S pravim pristupom (ishrana, stres management, po potrebi terapija), mnoge žene žive puno i zdravo. Nisi sama.',
       ctas: [
         { label: 'Zakaži konsultaciju odmah', href: CONFIG.BOOKING_URL, primary: true, icon: 'ph-calendar' },
         { label: 'Pogledaj naše proizvode', href: CONFIG.SHOP_URL, primary: false, icon: 'ph-shopping-bag' },
