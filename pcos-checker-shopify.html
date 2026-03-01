@@ -416,6 +416,8 @@
     }
 
     .answer-btn {
+      -webkit-appearance: none;
+      appearance: none;
       background: var(--white);
       border: 1.5px solid var(--lavender-light);
       border-radius: var(--radius-md);
@@ -431,18 +433,26 @@
       gap: 12px;
       box-shadow: 0 1px 4px rgba(79,54,75,0.06);
     }
-    .answer-btn:hover {
+    .answer-btn:hover,
+    .answer-btn:focus,
+    .answer-btn:active {
+      color: var(--plum);
       border-color: var(--plum-light);
       background: var(--white);
       box-shadow: 0 4px 20px rgba(79,54,75,0.12);
       transform: translateY(-1px);
     }
-    .answer-btn--selected {
+    .answer-btn--selected,
+    .answer-btn--selected:hover,
+    .answer-btn--selected:focus,
+    .answer-btn--selected:active,
+    .answer-btn--selected:disabled {
       border-color: var(--plum);
       border-width: 2px;
       background: linear-gradient(135deg, #efe5f5, #e4d5ee);
       color: var(--plum);
       box-shadow: 0 4px 20px rgba(79,54,75,0.14);
+      transform: none;
     }
     .answer-btn--selected .answer-dot {
       background: var(--plum);
