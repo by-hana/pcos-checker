@@ -200,26 +200,62 @@
     .pdf-promo {
       display: flex;
       align-items: center;
-      gap: 14px;
-      background: linear-gradient(135deg, #fff5f0 0%, #fff9f7 100%);
-      border-left: 4px solid var(--orange);
-      border-radius: var(--radius-md);
-      padding: 16px 20px;
+      gap: 16px;
+      background: linear-gradient(135deg, var(--plum-dark) 0%, var(--plum-light) 100%);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
       max-width: 440px;
       width: 100%;
       margin-bottom: 28px;
       animation: fadeUp 0.6s var(--ease-out) 0.32s both;
-      box-shadow: 0 2px 12px rgba(241,87,34,0.08);
+      box-shadow: 0 8px 32px rgba(79,54,75,0.28), 0 2px 8px rgba(79,54,75,0.14);
+      position: relative;
+      overflow: hidden;
     }
-    .pdf-promo i {
-      font-size: 28px;
-      color: var(--orange);
+    .pdf-promo::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -20px;
+      width: 130px; height: 130px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .pdf-promo__icon {
+      width: 48px; height: 48px;
+      background: rgba(241,87,34,0.18);
+      border: 1px solid rgba(241,87,34,0.35);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .pdf-promo span {
-      font-size: 14px;
-      color: var(--plum);
-      line-height: 1.45;
+    .pdf-promo__icon i { font-size: 22px; color: var(--orange); }
+    .pdf-promo__content { flex: 1; min-width: 0; }
+    .pdf-promo__label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 3px;
+    }
+    .pdf-promo__title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+    .pdf-promo__tag {
+      background: var(--orange);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 5px 10px;
+      border-radius: 100px;
+      flex-shrink: 0;
+      align-self: flex-start;
+      text-transform: uppercase;
     }
 
     .btn-primary {
@@ -907,8 +943,14 @@
       <li><i class="ph-bold ph-check-circle"></i> Personalizirani rezultat (Nizak / Srednji / Visok rizik)</li>
     </ul>
     <div class="pdf-promo">
-      <i class="ph-bold ph-file-pdf"></i>
-      <span><strong>Besplatni PDF vodič</strong> stiže na tvoj email odmah nakon kviza</span>
+      <div class="pdf-promo__icon">
+        <i class="ph-bold ph-file-pdf"></i>
+      </div>
+      <div class="pdf-promo__content">
+        <p class="pdf-promo__label">Besplatno uz kviz</p>
+        <p class="pdf-promo__title">PDF vodič o PCOS-u</p>
+      </div>
+      <span class="pdf-promo__tag">Gratis</span>
     </div>
     <button class="btn-primary" id="btn-start">
       Započni kviz <i class="ph-bold ph-arrow-right"></i>
