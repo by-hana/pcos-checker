@@ -1343,8 +1343,8 @@
   /* ─── SCORE + RISK LEVEL ─────────────────────────────────────── */
   function calculateScore() {
     state.score = state.answers.reduce((sum, v) => sum + v, 0);
-    if (state.score <= 10)      state.riskLevel = 'low';
-    else if (state.score <= 17) state.riskLevel = 'mid';
+    if (state.score <= 4)       state.riskLevel = 'low';
+    else if (state.score <= 13) state.riskLevel = 'mid';
     else                        state.riskLevel = 'high';
   }
 
