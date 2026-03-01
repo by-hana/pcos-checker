@@ -981,10 +981,10 @@
 
   /* ─── CONFIG ─────────────────────────────────────────────────── */
   const CONFIG = {
-    KLAVIYO_COMPANY_ID: 'YOUR_PUBLIC_API_KEY',  // Replace: 6-char Klaviyo Public API Key
-    KLAVIYO_LIST_ID:    'YOUR_LIST_ID',          // Replace: Klaviyo list ID
-    SHOP_URL:           '/collections/all',      // Replace: product collection or specific page
-    BOOKING_URL:        '/pages/booking',        // Replace: consultation booking page
+    KLAVIYO_COMPANY_ID:      'YOUR_PUBLIC_API_KEY',  // Replace: 6-char Klaviyo Public API Key
+    KLAVIYO_LIST_ID:         'YOUR_LIST_ID',          // Replace: quiz-leads list ID (separate, dedicated)
+    KLAVIYO_WAITLIST_LIST_ID:'YOUR_WAITLIST_LIST_ID', // Replace: product-waitlist list ID
+    BOOKING_URL:             '/pages/booking',        // Replace: consultation booking page
   };
 
   /* ─── QUESTIONS ──────────────────────────────────────────────── */
@@ -1095,8 +1095,7 @@
       title: 'Tvoji simptomi ne ukazuju na PCOS',
       body: 'Na osnovu tvojih odgovora, simptomi koje opisuješ nisu tipični za PCOS, što je sjajna vijest. Ipak, imaj na umu da hormonalna ravnoteža nije statična: oko 21% žena s naizgled redovnim ciklusima zapravo ima anovulatorne cikluse. Ako u bilo kom trenutku primijetiš neredovne cikluse, pojačan rast dlaka ili poteškoće s kilažom, vrijedi zakazati pregled. Redovni ginekološki pregledi ostaju važni bez obzira na rezultat ovog kviza.',
       ctas: [
-        { label: 'Pogledaj naše proizvode', href: CONFIG.SHOP_URL, primary: true, icon: 'ph-shopping-bag' },
-        { label: 'Zakaži preventivni pregled', href: CONFIG.BOOKING_URL, primary: false, icon: 'ph-calendar' },
+        { label: 'Zakaži preventivni pregled', href: CONFIG.BOOKING_URL, primary: true, icon: 'ph-calendar' },
       ],
     },
     mid: {
@@ -1106,7 +1105,6 @@
       body: 'Tvoji odgovori ukazuju na određene simptome koji se mogu vezati za PCOS. To ne znači nužno dijagnozu, jer mnogi ovi simptomi imaju i druge uzroke. Preporučujemo razgovor s ginekologom ili endokrinologom. Laboratorijske analize (hormoni, inzulin, ultrazvuk jajnika) mogu dati jasnu sliku. U međuvremenu, stvori dobre navike: regularna tjelesna aktivnost i smanjenje šećera mogu značajno poboljšati hormonalnu ravnotežu.',
       ctas: [
         { label: 'Zakaži konsultaciju', href: CONFIG.BOOKING_URL, primary: true, icon: 'ph-calendar' },
-        { label: 'Pogledaj naše proizvode', href: CONFIG.SHOP_URL, primary: false, icon: 'ph-shopping-bag' },
       ],
     },
     high: {
@@ -1115,8 +1113,7 @@
       title: 'Tvoji simptomi snažno ukazuju na PCOS',
       body: 'Na osnovu tvojih odgovora, imaš više simptoma koji su karakteristični za PCOS. Ovo je važan korak: saznati na vrijeme znači moći na vrijeme djelovati. Preporučujemo da što prije zakaž pregled kod ginekologa ili endokrinologa. Donesi ovaj rezultat sa sobom. PCOS je upravljivo stanje. S pravim pristupom (ishrana, stres management, po potrebi terapija), mnoge žene žive puno i zdravo. Nisi sama.',
       ctas: [
-        { label: 'Zakaži konsultaciju odmah', href: CONFIG.BOOKING_URL, primary: true, icon: 'ph-calendar' },
-        { label: 'Pogledaj naše proizvode', href: CONFIG.SHOP_URL, primary: false, icon: 'ph-shopping-bag' },
+        { label: 'Prijavi se na listu čekanja za PCOS proizvode', action: 'waitlist', primary: true, icon: 'ph-bell' },
       ],
     },
   };
@@ -1255,7 +1252,7 @@
   }
 
   /* ─── KLAVIYO SUBSCRIBE ──────────────────────────────────────── */
-  async function subscribeToKlaviyo(email) {
+  async function subscribeToKlaviyo(email, listId = CONFIG.KLAVIYO_LIST_ID) {
     const today = new Date().toISOString().split('T')[0];
     const payload = {
       data: {
@@ -1281,7 +1278,7 @@
           list: {
             data: {
               type: 'list',
-              id:   CONFIG.KLAVIYO_LIST_ID,
+              id:   listId,
             },
           },
         },
@@ -1330,12 +1327,35 @@
 
     // CTAs
     const ctaGroup = $('cta-group');
-    ctaGroup.innerHTML = content.ctas.map(cta =>
-      `<a href="${cta.href}" class="${cta.primary ? 'btn-cta-primary' : 'btn-cta-secondary'}">
+    ctaGroup.innerHTML = content.ctas.map(cta => {
+      if (cta.action === 'waitlist') {
+        return `<button class="btn-cta-primary" id="btn-waitlist">
+          <i class="ph-bold ${cta.icon}"></i>
+          <span id="waitlist-text">${cta.label}</span>
+        </button>`;
+      }
+      return `<a href="${cta.href}" class="${cta.primary ? 'btn-cta-primary' : 'btn-cta-secondary'}">
         <i class="ph-bold ${cta.icon}"></i> ${cta.label}
-       </a>`
-    ).join('');
+       </a>`;
+    }).join('');
 
+    const waitlistBtn = $('btn-waitlist');
+    if (waitlistBtn) waitlistBtn.addEventListener('click', handleWaitlistClick);
+  }
+
+  /* ─── WAITLIST SUBSCRIBE ─────────────────────────────────────── */
+  async function handleWaitlistClick() {
+    const btn     = $('btn-waitlist');
+    const textEl  = $('waitlist-text');
+    if (!btn || btn.disabled) return;
+
+    btn.disabled = true;
+    textEl.innerHTML = '<span class="spinner"></span>';
+
+    await subscribeToKlaviyo(state.email, CONFIG.KLAVIYO_WAITLIST_LIST_ID);
+
+    btn.style.background = '#2e7d32';
+    textEl.innerHTML = '<i class="ph-bold ph-check-circle"></i> Prijavljeni ste!';
   }
 
   /* ─── EMAIL VALIDATION ───────────────────────────────────────── */
