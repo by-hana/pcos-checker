@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PCOS Provjera – Kviz Simptoma</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --lavender:   #cabad7;
+      --white:      #ffffff;
+      --plum:       #4f364b;
+      --orange:     #f15722;
+      --bg:         #faf8fc;
+      --plum-light: #7a5675;
+      --plum-dark:  #3a2537;
+      --lavender-light: #e8e0ef;
+      --lavender-dark:  #a99ab8;
+      --shadow-sm:  0 2px 8px rgba(79,54,75,0.10);
+      --shadow-md:  0 6px 24px rgba(79,54,75,0.14);
+      --shadow-lg:  0 12px 40px rgba(79,54,75,0.18);
+      --radius-sm:  8px;
+      --radius-md:  16px;
+      --radius-lg:  24px;
+      --radius-xl:  32px;
+      --ease-out:   cubic-bezier(0.22, 0.61, 0.36, 1);
+      --ease-spring:cubic-bezier(0.34, 1.56, 0.64, 1);
+      --font-head:  'Playfair Display', Georgia, serif;
+      --font-body:  'Inter', system-ui, sans-serif;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--plum);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ─── WRAPPER ────────────────────────────────────────────── */
+    #pcos-app {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ─── SCREENS ────────────────────────────────────────────── */
+    .screen {
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      min-height: 100vh;
+      transition: opacity 0.35s var(--ease-out);
+    }
+    .screen--active {
+      opacity: 1;
+      pointer-events: auto;
+      position: relative;
+    }
+
+    /* ─── KEYFRAMES ──────────────────────────────────────────── */
+    @keyframes slideInCard {
+      from { transform: translateX(48px); opacity: 0; }
+      to   { transform: translateX(0);    opacity: 1; }
+    }
+    @keyframes slideOutCard {
+      from { transform: translateX(0);    opacity: 1; }
+      to   { transform: translateX(-48px);opacity: 0; }
+    }
+    @keyframes slideInCardBack {
+      from { transform: translateX(-48px); opacity: 0; }
+      to   { transform: translateX(0);     opacity: 1; }
+    }
+    @keyframes fadeUp {
+      from { transform: translateY(24px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    @keyframes pulse-badge {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(241,87,34,0.35); }
+      50%       { box-shadow: 0 0 0 12px rgba(241,87,34,0); }
+    }
+    @keyframes grow-bar {
+      from { width: 0; }
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ─── UTILITY ────────────────────────────────────────────── */
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
+    }
+
+    /* ─────────────────────────────────────────────────────────── */
+    /* SCREEN 1 – HERO                                             */
+    /* ─────────────────────────────────────────────────────────── */
+    #screen-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px 64px;
+      background: linear-gradient(160deg, #f0eaf5 0%, var(--bg) 60%);
+    }
+
+    .hero__decoration {
+      width: 88px; height: 88px;
+      background: var(--lavender);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-md);
+      animation: fadeUp 0.6s var(--ease-out) 0.1s both;
+    }
+    .hero__decoration i { font-size: 40px; color: var(--plum); }
+
+    .hero__tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--plum-light);
+      background: var(--lavender-light);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      animation: fadeUp 0.6s var(--ease-out) 0.15s both;
+    }
+
+    .hero__title {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      text-align: center;
+      color: var(--plum);
+      line-height: 1.2;
+      max-width: 560px;
+      margin-bottom: 18px;
+      animation: fadeUp 0.6s var(--ease-out) 0.2s both;
+    }
+    .hero__title em {
+      font-style: italic;
+      color: var(--orange);
+    }
+
+    .hero__subtitle {
+      font-size: 16px;
+      text-align: center;
+      color: var(--plum-light);
+      max-width: 440px;
+      margin-bottom: 36px;
+      animation: fadeUp 0.6s var(--ease-out) 0.25s both;
+    }
+
+    .hero__bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 40px;
+      animation: fadeUp 0.6s var(--ease-out) 0.3s both;
+    }
+    .hero__bullets li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--plum);
+    }
+    .hero__bullets li i {
+      color: var(--orange);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      padding: 16px 36px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(241,87,34,0.35);
+      transition: transform 0.18s var(--ease-spring), box-shadow 0.18s ease;
+      animation: fadeUp 0.6s var(--ease-out) 0.35s both;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 28px rgba(241,87,34,0.45);
+    }
+    .btn-primary:active { transform: scale(0.97); }
+
+    .hero__disclaimer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--lavender-dark);
+      text-align: center;
+      max-width: 480px;
+      line-height: 1.5;
+      padding: 16px 20px;
+      background: var(--lavender-light);
+      border-radius: var(--radius-md);
+      animation: fadeUp 0.6s var(--ease-out) 0.4s both;
+    }
+
+    /* ─────────────────────────────────────────────────────────── */
+    /* SCREEN 2 – QUIZ                                             */
+    /* ─────────────────────────────────────────────────────────── */
+    #screen-quiz {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .quiz__header {
+      background: var(--white);
+      border-bottom: 1px solid var(--lavender-light);
+      padding: 20px 24px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quiz__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .btn-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      color: var(--plum-light);
+      font-size: 14px;
+      font-family: var(--font-body);
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-back:hover {
+      background: var(--lavender-light);
+      color: var(--plum);
+    }
+    .btn-back i { font-size: 18px; }
+
+    .quiz__counter {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--plum-light);
+      letter-spacing: 0.04em;
+    }
+    .quiz__counter span { color: var(--plum); }
+
+    .progress-bar-wrap {
+      height: 6px;
+      background: var(--lavender-light);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--lavender), var(--orange));
+      border-radius: 100px;
+      transition: width 0.4s var(--ease-out);
+      animation: grow-bar 0.4s var(--ease-out);
+    }
+
+    .quiz__body {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 24px 64px;
+    }
+
+    .question-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      padding: 36px 32px 32px;
+      max-width: 560px;
+      width: 100%;
+    }
+    .question-card--entering {
+      animation: slideInCard 0.35s var(--ease-out) both;
+    }
+    .question-card--entering-back {
+      animation: slideInCardBack 0.35s var(--ease-out) both;
+    }
+
+    .question-card__num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--lavender-dark);
+      margin-bottom: 14px;
+    }
+
+    .question-card__text {
+      font-family: var(--font-head);
+      font-size: clamp(18px, 3.5vw, 22px);
+      font-weight: 600;
+      color: var(--plum);
+      line-height: 1.35;
+      margin-bottom: 28px;
+    }
+
+    .answers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .answer-btn {
+      background: var(--bg);
+      border: 2px solid var(--lavender-light);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      text-align: left;
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--plum);
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s, transform 0.15s var(--ease-spring);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .answer-btn:hover {
+      border-color: var(--lavender);
+      background: var(--lavender-light);
+      transform: translateX(4px);
+    }
+    .answer-btn--selected {
+      border-color: var(--plum);
+      background: linear-gradient(135deg, #f0eaf5, #e8e0ef);
+      color: var(--plum);
+    }
+    .answer-btn--selected .answer-dot {
+      background: var(--plum);
+      border-color: var(--plum);
+    }
+    .answer-btn--selected .answer-dot::after {
+      opacity: 1;
+    }
+    .answer-btn:disabled {
+      cursor: default;
+    }
+
+    .answer-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--lavender-dark);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+      position: relative;
+    }
+    .answer-dot::after {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--white);
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    /* ─────────────────────────────────────────────────────────── */
+    /* SCREEN 3 – EMAIL CAPTURE                                    */
+    /* ─────────────────────────────────────────────────────────── */
+    #screen-email {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 48px 24px;
+      background: linear-gradient(160deg, #f0eaf5 0%, var(--bg) 60%);
+    }
+
+    .email-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      padding: 44px 40px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      animation: fadeUp 0.5s var(--ease-out) both;
+    }
+
+    .email-card__icon {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, var(--lavender), #b8a5ca);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .email-card__icon i { font-size: 32px; color: var(--plum); }
+
+    .email-card__title {
+      font-family: var(--font-head);
+      font-size: clamp(22px, 4vw, 28px);
+      font-weight: 700;
+      color: var(--plum);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .email-card__body {
+      font-size: 15px;
+      color: var(--plum-light);
+      margin-bottom: 28px;
+      line-height: 1.55;
+    }
+
+    .freebie-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #fff5f0, #ffeee6);
+      border: 1px solid rgba(241,87,34,0.25);
+      border-radius: 100px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--orange);
+      margin-bottom: 28px;
+    }
+    .freebie-pill i { font-size: 16px; }
+
+    .email-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+    .input-wrap i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: var(--lavender-dark);
+      pointer-events: none;
+    }
+    .email-input {
+      width: 100%;
+      padding: 15px 16px 15px 46px;
+      border: 2px solid var(--lavender-light);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--plum);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .email-input:focus {
+      border-color: var(--lavender);
+      box-shadow: 0 0 0 4px rgba(202,186,215,0.25);
+    }
+    .email-input::placeholder { color: var(--lavender-dark); }
+
+    .btn-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--plum);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 15px 24px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(79,54,75,0.25);
+      transition: transform 0.18s var(--ease-spring), box-shadow 0.18s ease, background 0.18s;
+    }
+    .btn-submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(79,54,75,0.3);
+      background: var(--plum-dark);
+    }
+    .btn-submit:active:not(:disabled) { transform: scale(0.97); }
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: var(--white);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .email-error {
+      font-size: 13px;
+      color: #d94040;
+      text-align: left;
+      display: none;
+    }
+    .email-error--visible { display: block; }
+
+    .email-privacy {
+      font-size: 12px;
+      color: var(--lavender-dark);
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* ─────────────────────────────────────────────────────────── */
+    /* SCREEN 4 – RESULTS                                          */
+    /* ─────────────────────────────────────────────────────────── */
+    #screen-results {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px 80px;
+      background: linear-gradient(160deg, #f0eaf5 0%, var(--bg) 60%);
+    }
+
+    .results__header {
+      text-align: center;
+      margin-bottom: 36px;
+      animation: fadeUp 0.5s var(--ease-out) 0.1s both;
+    }
+
+    .results__intro {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lavender-dark);
+      margin-bottom: 12px;
+    }
+
+    .results__headline {
+      font-family: var(--font-head);
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 700;
+      color: var(--plum);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    /* Risk Badge */
+    .risk-badge-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 36px;
+      animation: fadeUp 0.5s var(--ease-out) 0.2s both;
+    }
+
+    .risk-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .risk-badge i { font-size: 22px; }
+
+    .risk-badge--low {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      color: #2e7d32;
+      border: 2px solid #a5d6a7;
+    }
+    .risk-badge--mid {
+      background: linear-gradient(135deg, #fff8e1, #ffecb3);
+      color: #e65100;
+      border: 2px solid #ffe082;
+    }
+    .risk-badge--high {
+      background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+      color: #c62828;
+      border: 2px solid #f48fb1;
+      animation: pulse-badge 2s ease infinite;
+    }
+
+    .score-display {
+      font-size: 13px;
+      color: var(--plum-light);
+      font-weight: 500;
+    }
+    .score-display strong { color: var(--plum); }
+
+    /* Result Card */
+    .result-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      padding: 32px;
+      max-width: 560px;
+      width: 100%;
+      margin-bottom: 24px;
+      animation: fadeUp 0.5s var(--ease-out) 0.3s both;
+    }
+
+    .result-card__title {
+      font-family: var(--font-head);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--plum);
+      margin-bottom: 14px;
+    }
+
+    .result-card__body {
+      font-size: 15px;
+      color: var(--plum-light);
+      line-height: 1.65;
+    }
+
+    /* Freebie Box */
+    .freebie-box {
+      background: linear-gradient(135deg, var(--plum), var(--plum-light));
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      max-width: 560px;
+      width: 100%;
+      margin-bottom: 24px;
+      color: var(--white);
+      animation: fadeUp 0.5s var(--ease-out) 0.4s both;
+      position: relative;
+      overflow: hidden;
+    }
+    .freebie-box::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .freebie-box__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 100px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .freebie-box__tag i { font-size: 14px; }
+
+    .freebie-box__title {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .freebie-box__body {
+      font-size: 14px;
+      opacity: 0.85;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .freebie-box__email-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.12);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .freebie-box__email-note i { font-size: 18px; flex-shrink: 0; }
+
+    /* CTA Buttons */
+    .cta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 560px;
+      width: 100%;
+      animation: fadeUp 0.5s var(--ease-out) 0.5s both;
+    }
+
+    .btn-cta-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 16px 28px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(241,87,34,0.3);
+      transition: transform 0.18s var(--ease-spring), box-shadow 0.18s;
+    }
+    .btn-cta-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(241,87,34,0.4);
+    }
+
+    .btn-cta-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--white);
+      color: var(--plum);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 15px 28px;
+      border-radius: 100px;
+      border: 2px solid var(--lavender);
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.18s var(--ease-spring), border-color 0.18s, background 0.18s;
+    }
+    .btn-cta-secondary:hover {
+      transform: translateY(-2px);
+      border-color: var(--lavender-dark);
+      background: var(--lavender-light);
+    }
+
+    .results__restart {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--lavender-dark);
+      text-align: center;
+      animation: fadeUp 0.5s var(--ease-out) 0.6s both;
+    }
+    .results__restart button {
+      background: none;
+      border: none;
+      color: var(--plum-light);
+      font-family: var(--font-body);
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+    }
+    .results__restart button:hover { color: var(--plum); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .question-card { padding: 28px 20px 24px; }
+      .email-card    { padding: 32px 24px; }
+      .result-card   { padding: 24px 20px; }
+      .freebie-box   { padding: 24px 20px; }
+      .quiz__body    { padding: 24px 16px 48px; }
+    }
+  </style>
+</head>
+
+<body>
+<div id="pcos-app">
+
+  <!-- ── SCREEN 1: HERO ───────────────────────────────────────── -->
+  <section id="screen-hero" class="screen screen--active" role="main">
+    <div class="hero__decoration">
+      <i class="ph-bold ph-flower-lotus"></i>
+    </div>
+    <span class="hero__tag">Besplatna provjera · 2 minute</span>
+    <h1 class="hero__title">
+      Imaš li simptome<br><em>PCOS-a</em>?
+    </h1>
+    <p class="hero__subtitle">
+      Odgovori na 12 kratkih pitanja i saznaj koliki je tvoj rizik — potpuno besplatno.
+    </p>
+    <ul class="hero__bullets" aria-label="Šta dobijaš">
+      <li><i class="ph-bold ph-check-circle"></i> 12 pitanja baziranih na medicinskim smjernicama</li>
+      <li><i class="ph-bold ph-check-circle"></i> Personalizirani rezultat (Nizak / Srednji / Visok rizik)</li>
+      <li><i class="ph-bold ph-gift"></i> Besplatni PDF vodič o PCOS-u na email</li>
+    </ul>
+    <button class="btn-primary" id="btn-start">
+      Počni kviz <i class="ph-bold ph-arrow-right"></i>
+    </button>
+    <p class="hero__disclaimer">
+      <strong>Napomena:</strong> Ovaj kviz je edukativnog karaktera i ne predstavlja medicinsku dijagnozu.
+      Za tačnu dijagnozu i liječenje obratite se svom ljekaru ili ginekologu.
+    </p>
+  </section>
+
+  <!-- ── SCREEN 2: QUIZ ───────────────────────────────────────── -->
+  <section id="screen-quiz" class="screen" role="main" aria-label="Kviz pitanja">
+    <div class="quiz__header">
+      <div class="quiz__topbar">
+        <button class="btn-back" id="btn-back" aria-label="Nazad">
+          <i class="ph-bold ph-arrow-left"></i> Nazad
+        </button>
+        <span class="quiz__counter">
+          Pitanje <span id="q-current">1</span> od <span>12</span>
+        </span>
+      </div>
+      <div class="progress-bar-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0">
+        <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="quiz__body">
+      <div class="question-card" id="question-card" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 3: EMAIL CAPTURE ─────────────────────────────── -->
+  <section id="screen-email" class="screen" role="main" aria-label="Unesi email za rezultate">
+    <div class="email-card">
+      <div class="email-card__icon">
+        <i class="ph-bold ph-envelope-open"></i>
+      </div>
+      <h2 class="email-card__title">Tvoji rezultati su<br>gotovo spremni!</h2>
+      <p class="email-card__body">
+        Unesi svoju email adresu da otključaš personalizirani rezultat i dobiješ besplatni PDF vodič na inbox.
+      </p>
+      <div class="freebie-pill">
+        <i class="ph-bold ph-file-pdf"></i>
+        Besplatni PDF: "PCOS – Šta trebam znati"
+      </div>
+      <form class="email-form" id="email-form" novalidate>
+        <div class="input-wrap">
+          <i class="ph-bold ph-envelope"></i>
+          <input
+            type="email"
+            class="email-input"
+            id="email-input"
+            placeholder="tvoj@email.com"
+            autocomplete="email"
+            inputmode="email"
+            required
+            aria-label="Email adresa"
+          />
+        </div>
+        <span class="email-error" id="email-error" role="alert">
+          Molimo unesi ispravnu email adresu.
+        </span>
+        <button type="submit" class="btn-submit" id="btn-submit">
+          <span id="submit-text">Vidi moje rezultate <i class="ph-bold ph-arrow-right"></i></span>
+        </button>
+        <p class="email-privacy">
+          <i class="ph ph-shield-check" style="font-size:13px;vertical-align:-1px"></i>
+          Nema spama. Možeš se odjaviti u svakom trenutku.
+          Tvoji podaci se čuvaju u skladu s GDPR politikom.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 4: RESULTS ─────────────────────────────────────── -->
+  <section id="screen-results" class="screen" role="main" aria-label="Rezultati kviza">
+    <div class="results__header">
+      <p class="results__intro">Tvoji rezultati</p>
+      <h2 class="results__headline" id="results-headline">Analiza je gotova</h2>
+    </div>
+
+    <div class="risk-badge-wrap">
+      <div class="risk-badge" id="risk-badge" aria-live="polite"></div>
+      <p class="score-display" id="score-display"></p>
+    </div>
+
+    <div class="result-card" id="result-card">
+      <h3 class="result-card__title" id="result-title"></h3>
+      <p class="result-card__body" id="result-body"></p>
+    </div>
+
+    <div class="freebie-box">
+      <div class="freebie-box__tag">
+        <i class="ph-bold ph-gift"></i> Besplatni poklon
+      </div>
+      <p class="freebie-box__title">PDF vodič je na putu do tvog inboxa!</p>
+      <p class="freebie-box__body">
+        Naš PDF vodič "PCOS – Šta trebam znati" uključuje praktične savjete o ishrani, hormonalnoj ravnoteži i koracima koje možeš poduzeti već danas.
+      </p>
+      <div class="freebie-box__email-note">
+        <i class="ph-bold ph-envelope-simple"></i>
+        <span>Provjeri email — vodič stiže za nekoliko minuta. Provjeri i spam folder ako ga ne vidiš.</span>
+      </div>
+    </div>
+
+    <div class="cta-group" id="cta-group">
+      <!-- dynamically injected based on risk level -->
+    </div>
+
+    <div class="results__restart">
+      <p>Želiš ponoviti kviz? <button id="btn-restart">Počni ispočetka</button></p>
+    </div>
+  </section>
+
+</div><!-- /#pcos-app -->
+
+<script>
+(function () {
+  'use strict';
+
+  /* ─── CONFIG ─────────────────────────────────────────────────── */
+  const CONFIG = {
+    KLAVIYO_COMPANY_ID: 'YOUR_PUBLIC_API_KEY',  // Replace: 6-char Klaviyo Public API Key
+    KLAVIYO_LIST_ID:    'YOUR_LIST_ID',          // Replace: Klaviyo list ID
+    SHOP_URL:           '/collections/all',      // Replace: product collection or specific page
+    BOOKING_URL:        '/pages/booking',        // Replace: consultation booking page
+  };
+
+  /* ─── QUESTIONS ──────────────────────────────────────────────── */
+  const QUESTIONS = [
+    {
+      text: 'Koliko često imaš neredovne menstruacije?',
+      answers: [
+        { label: 'Nikad ili rijetko',       value: 0 },
+        { label: 'Ponekad (1–2x godišnje)', value: 1 },
+        { label: 'Često ili uvijek',         value: 2 },
+      ],
+    },
+    {
+      text: 'Koliko često imaš problema s aknom ili masnom kožom?',
+      answers: [
+        { label: 'Nikad ili rijetko',          value: 0 },
+        { label: 'Ponekad',                    value: 1 },
+        { label: 'Često (lice, leđa, grudi)', value: 2 },
+      ],
+    },
+    {
+      text: 'Primijetiš li dlake na neobičnim mjestima (brada, gornja usna, prsa, trbuh)?',
+      answers: [
+        { label: 'Nikad',              value: 0 },
+        { label: 'Ponekad, blage',     value: 1 },
+        { label: 'Često ili znatne',   value: 2 },
+      ],
+    },
+    {
+      text: 'Primijetiš li da ti kosa tanje ili više opada?',
+      answers: [
+        { label: 'Nikad',               value: 0 },
+        { label: 'Blago, povremeno',    value: 1 },
+        { label: 'Da, primjetno',       value: 2 },
+      ],
+    },
+    {
+      text: 'Poteškoće s mršavljenjem unatoč trudu?',
+      answers: [
+        { label: 'Nemam',                              value: 0 },
+        { label: 'Malo teže',                          value: 1 },
+        { label: 'Jako teško, skoro nemoguće',         value: 2 },
+      ],
+    },
+    {
+      text: 'Pretjerani umor i nedostatak energije bez razloga?',
+      answers: [
+        { label: 'Rijetko',              value: 0 },
+        { label: 'Ponekad',              value: 1 },
+        { label: 'Gotovo svakodnevno',   value: 2 },
+      ],
+    },
+    {
+      text: 'Nagle promjene raspoloženja, anksioznost ili depresivnost?',
+      answers: [
+        { label: 'Rijetko',                      value: 0 },
+        { label: 'Ponekad',                      value: 1 },
+        { label: 'Često ili gotovo stalno',      value: 2 },
+      ],
+    },
+    {
+      text: 'Tamne mrlje kože (baršunaste) na vratu, pazuhu ili preponi?',
+      answers: [
+        { label: 'Ne',                           value: 0 },
+        { label: 'Nisam sigurna / blage',        value: 1 },
+        { label: 'Da, primjetne',                value: 2 },
+      ],
+    },
+    {
+      text: 'Dijagnosticirane ciste na jajnicima ili pomenuto od liječnika?',
+      answers: [
+        { label: 'Ne',                          value: 0 },
+        { label: 'Pomenuto, nije potvrđeno',    value: 1 },
+        { label: 'Da, dijagnosticirano',        value: 2 },
+      ],
+    },
+    {
+      text: 'Porodična historija PCOS-a ili hormonalnih poremećaja?',
+      answers: [
+        { label: 'Ne / ne znam', value: 0 },
+        { label: 'Moguće',       value: 1 },
+        { label: 'Da, potvrđeno', value: 2 },
+      ],
+    },
+    {
+      text: 'Jaki bolovi ili grčevi tokom menstruacije?',
+      answers: [
+        { label: 'Rijetko ili nikad',          value: 0 },
+        { label: 'Ponekad, podnošljivi',       value: 1 },
+        { label: 'Često, onesposobljavajući',  value: 2 },
+      ],
+    },
+    {
+      text: 'Pojačana žudnja za šećerom/ugljikohidratima (poslijepodne/navečer)?',
+      answers: [
+        { label: 'Rijetko',              value: 0 },
+        { label: 'Ponekad',              value: 1 },
+        { label: 'Gotovo svakodnevno',   value: 2 },
+      ],
+    },
+  ];
+
+  /* ─── RISK CONTENT ───────────────────────────────────────────── */
+  const RISK_CONTENT = {
+    low: {
+      badge:  { label: 'Nizak rizik',   cls: 'risk-badge--low',  icon: 'ph-check-circle' },
+      headline: 'Dobra vijest — nizak rizik!',
+      title: 'Tvoji simptomi ne ukazuju na PCOS',
+      body: 'Na osnovu tvojih odgovora, simptomi koje opisuješ nisu tipični za PCOS. To je sjajna vijest! Ipak, tijelo se mijenja, a hormonalna ravnoteža je dinamična. Nastavi brinuti o sebi — redovni pregledi, uravnotežena ishrana i dobar san su temelj ženskog zdravlja. Ako u budućnosti primijetiš promjene, slobodno ponovi kviz ili posjeti svog ljekara.',
+      ctas: [
+        { label: 'Pogledaj naše proizvode', href: CONFIG.SHOP_URL, primary: true, icon: 'ph-shopping-bag' },
+        { label: 'Zakaži preventivni pregled', href: CONFIG.BOOKING_URL, primary: false, icon: 'ph-calendar' },
+      ],
+    },
+    mid: {
+      badge:  { label: 'Srednji rizik',  cls: 'risk-badge--mid',  icon: 'ph-warning' },
+      headline: 'Vrijedi obratiti pažnju.',
+      title: 'Neki simptomi se poklapaju s PCOS-om',
+      body: 'Tvoji odgovori ukazuju na određene simptome koji se mogu vezati za PCOS. To ne znači nužno dijagnozu — mnogi ovi simptomi imaju i druge uzroke. Preporučujemo razgovor s ginekologom ili endokrinologom. Laboratorijske analize (hormoni, inzulin, ultrazvuk jajnika) mogu dati jasnu sliku. U međuvremenu, stvori dobre navike: regularna tjelesna aktivnost i smanjenje šećera mogu značajno poboljšati hormonalnu ravnotežu.',
+      ctas: [
+        { label: 'Zakaži konsultaciju', href: CONFIG.BOOKING_URL, primary: true, icon: 'ph-calendar' },
+        { label: 'Pogledaj naše proizvode', href: CONFIG.SHOP_URL, primary: false, icon: 'ph-shopping-bag' },
+      ],
+    },
+    high: {
+      badge:  { label: 'Visok rizik',   cls: 'risk-badge--high', icon: 'ph-warning-circle' },
+      headline: 'Preporučujemo posjet liječniku.',
+      title: 'Tvoji simptomi snažno ukazuju na PCOS',
+      body: 'Na osnovu tvojih odgovora, imaš više simptoma koji su karakteristični za PCOS. Ovo je važan korak — saznati na vrijeme znači moći na vrijeme djelovati. Preporučujemo da što prije zakaž pregled kod ginekologa ili endokrinologa. Donesi ovaj rezultat sa sobom. PCOS je upravljivo stanje — s pravim pristupom (ishrana, stres management, po potrebi terapija), mnoge žene žive puno i zdravo. Nisi sama.',
+      ctas: [
+        { label: 'Zakaži konsultaciju odmah', href: CONFIG.BOOKING_URL, primary: true, icon: 'ph-calendar' },
+        { label: 'Pogledaj naše proizvode', href: CONFIG.SHOP_URL, primary: false, icon: 'ph-shopping-bag' },
+      ],
+    },
+  };
+
+  /* ─── STATE ──────────────────────────────────────────────────── */
+  const state = {
+    currentQuestion: 0,
+    answers: [],          // array of numeric values
+    score: 0,
+    riskLevel: null,      // 'low' | 'mid' | 'high'
+    email: '',
+    submitting: false,
+    navigatingBack: false,
+  };
+
+  /* ─── DOM REFS ───────────────────────────────────────────────── */
+  const $ = id => document.getElementById(id);
+
+  const screens = {
+    hero:    $('screen-hero'),
+    quiz:    $('screen-quiz'),
+    email:   $('screen-email'),
+    results: $('screen-results'),
+  };
+
+  /* ─── SCREEN SWITCHER ────────────────────────────────────────── */
+  function activateScreen(name) {
+    Object.values(screens).forEach(s => s.classList.remove('screen--active'));
+    screens[name].classList.add('screen--active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ─── PROGRESS BAR ───────────────────────────────────────────── */
+  function updateProgress(idx) {
+    const pct = Math.round((idx / QUESTIONS.length) * 100);
+    const fill = $('progress-fill');
+    fill.style.width = pct + '%';
+    fill.parentElement.setAttribute('aria-valuenow', idx);
+    $('q-current').textContent = idx + 1;
+  }
+
+  /* ─── RENDER QUESTION ────────────────────────────────────────── */
+  function renderQuestion(idx, direction) {
+    const q = QUESTIONS[idx];
+    const card = $('question-card');
+
+    // Remove existing animation classes
+    card.classList.remove('question-card--entering', 'question-card--entering-back');
+
+    const savedValue = state.answers[idx] !== undefined ? state.answers[idx] : null;
+
+    card.innerHTML = `
+      <p class="question-card__num">Pitanje ${idx + 1} od ${QUESTIONS.length}</p>
+      <p class="question-card__text">${q.text}</p>
+      <div class="answers-list" role="radiogroup" aria-label="${q.text}">
+        ${q.answers.map((a, i) => `
+          <button
+            class="answer-btn${savedValue === a.value ? ' answer-btn--selected' : ''}"
+            data-value="${a.value}"
+            data-index="${i}"
+            role="radio"
+            aria-checked="${savedValue === a.value}"
+          >
+            <span class="answer-dot" aria-hidden="true"></span>
+            ${a.label}
+          </button>
+        `).join('')}
+      </div>
+    `;
+
+    // Trigger animation on next frame so class can reset
+    requestAnimationFrame(() => {
+      card.classList.add(
+        direction === 'back' ? 'question-card--entering-back' : 'question-card--entering'
+      );
+    });
+
+    // Wire answer buttons
+    card.querySelectorAll('.answer-btn').forEach(btn => {
+      btn.addEventListener('click', handleAnswerClick);
+    });
+
+    updateProgress(idx);
+  }
+
+  /* ─── HANDLE ANSWER CLICK ────────────────────────────────────── */
+  function handleAnswerClick(e) {
+    const btn = e.currentTarget;
+    const value = parseInt(btn.dataset.value, 10);
+    const card = $('question-card');
+    const idx = state.currentQuestion;
+
+    // Store answer (allow overwrite)
+    state.answers[idx] = value;
+
+    // Visual selection
+    card.querySelectorAll('.answer-btn').forEach(b => {
+      b.classList.remove('answer-btn--selected');
+      b.setAttribute('aria-checked', 'false');
+    });
+    btn.classList.add('answer-btn--selected');
+    btn.setAttribute('aria-checked', 'true');
+
+    // Disable all buttons to prevent double-tap
+    card.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
+
+    // Auto-advance after 400ms
+    setTimeout(() => {
+      if (idx < QUESTIONS.length - 1) {
+        state.currentQuestion++;
+        renderQuestion(state.currentQuestion, 'forward');
+      } else {
+        // All questions answered → email screen
+        activateScreen('email');
+      }
+    }, 400);
+  }
+
+  /* ─── BACK BUTTON ────────────────────────────────────────────── */
+  function handleBack() {
+    const idx = state.currentQuestion;
+    if (idx === 0) {
+      activateScreen('hero');
+    } else {
+      state.currentQuestion--;
+      renderQuestion(state.currentQuestion, 'back');
+    }
+  }
+
+  /* ─── SCORE + RISK LEVEL ─────────────────────────────────────── */
+  function calculateScore() {
+    state.score = state.answers.reduce((sum, v) => sum + v, 0);
+    if (state.score <= 8)       state.riskLevel = 'low';
+    else if (state.score <= 16) state.riskLevel = 'mid';
+    else                        state.riskLevel = 'high';
+  }
+
+  /* ─── KLAVIYO SUBSCRIBE ──────────────────────────────────────── */
+  async function subscribeToKlaviyo(email) {
+    const today = new Date().toISOString().split('T')[0];
+    const payload = {
+      data: {
+        type: 'subscription',
+        attributes: {
+          profile: {
+            data: {
+              type: 'profile',
+              attributes: {
+                email: email,
+                properties: {
+                  pcos_result:     state.riskLevel,
+                  pcos_score:      state.score,
+                  pcos_score_max:  24,
+                  quiz_completed:  true,
+                  quiz_date:       today,
+                },
+              },
+            },
+          },
+        },
+        relationships: {
+          list: {
+            data: {
+              type: 'list',
+              id:   CONFIG.KLAVIYO_LIST_ID,
+            },
+          },
+        },
+      },
+    };
+
+    try {
+      const res = await fetch(
+        `https://a.klaviyo.com/client/subscriptions/?company_id=${CONFIG.KLAVIYO_COMPANY_ID}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/vnd.api+json',
+            'revision': '2023-12-15',
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+      // 202 = accepted; anything else is a soft failure
+      return res.status === 202;
+    } catch (_) {
+      // Network error — fail silently, results still shown
+      return false;
+    }
+  }
+
+  /* ─── RENDER RESULTS ─────────────────────────────────────────── */
+  function renderResults() {
+    const content = RISK_CONTENT[state.riskLevel];
+
+    // Headline
+    $('results-headline').textContent = content.headline;
+
+    // Badge
+    const badge = $('risk-badge');
+    badge.className = 'risk-badge ' + content.badge.cls;
+    badge.innerHTML = `<i class="ph-bold ${content.badge.icon}"></i> ${content.badge.label}`;
+
+    // Score
+    $('score-display').innerHTML =
+      `Ukupni rezultat: <strong>${state.score} / 24</strong>`;
+
+    // Result card
+    $('result-title').textContent = content.title;
+    $('result-body').textContent  = content.body;
+
+    // CTAs
+    const ctaGroup = $('cta-group');
+    ctaGroup.innerHTML = content.ctas.map(cta =>
+      `<a href="${cta.href}" class="${cta.primary ? 'btn-cta-primary' : 'btn-cta-secondary'}">
+        <i class="ph-bold ${cta.icon}"></i> ${cta.label}
+       </a>`
+    ).join('');
+  }
+
+  /* ─── EMAIL VALIDATION ───────────────────────────────────────── */
+  function isValidEmail(val) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+  }
+
+  /* ─── FORM SUBMIT ────────────────────────────────────────────── */
+  async function handleEmailSubmit(e) {
+    e.preventDefault();
+    if (state.submitting) return;
+
+    const input  = $('email-input');
+    const errEl  = $('email-error');
+    const btnTxt = $('submit-text');
+    const btn    = $('btn-submit');
+    const email  = input.value.trim();
+
+    // Validate
+    if (!isValidEmail(email)) {
+      errEl.classList.add('email-error--visible');
+      input.focus();
+      return;
+    }
+    errEl.classList.remove('email-error--visible');
+
+    state.email = email;
+    state.submitting = true;
+
+    // Show spinner
+    btn.disabled = true;
+    btnTxt.innerHTML = '<span class="spinner"></span> Obrađujem...';
+
+    // Calculate score before rendering
+    calculateScore();
+
+    // Fire Klaviyo — result always shown regardless of API outcome
+    await subscribeToKlaviyo(email);
+
+    // Render & show results
+    renderResults();
+    activateScreen('results');
+
+    state.submitting = false;
+  }
+
+  /* ─── RESTART ────────────────────────────────────────────────── */
+  function restart() {
+    state.currentQuestion = 0;
+    state.answers = [];
+    state.score = 0;
+    state.riskLevel = null;
+    state.email = '';
+    state.submitting = false;
+
+    // Reset email form
+    $('email-input').value = '';
+    $('email-error').classList.remove('email-error--visible');
+    const btn = $('btn-submit');
+    btn.disabled = false;
+    $('submit-text').innerHTML = 'Vidi moje rezultate <i class="ph-bold ph-arrow-right"></i>';
+
+    activateScreen('hero');
+  }
+
+  /* ─── EVENT LISTENERS ────────────────────────────────────────── */
+  $('btn-start').addEventListener('click', () => {
+    // Reset state (supports re-starts from hero)
+    state.currentQuestion = 0;
+    state.answers = [];
+    renderQuestion(0, 'forward');
+    activateScreen('quiz');
+  });
+
+  $('btn-back').addEventListener('click', handleBack);
+  $('email-form').addEventListener('submit', handleEmailSubmit);
+  $('btn-restart').addEventListener('click', restart);
+
+  // Clear email error on input
+  $('email-input').addEventListener('input', () => {
+    $('email-error').classList.remove('email-error--visible');
+  });
+
+})();
+</script>
+
+</body>
+</html>
