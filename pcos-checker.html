@@ -793,76 +793,6 @@
     }
     .results__restart button:hover { color: var(--plum); }
 
-    /* ─── RED FLAG CHECKBOXES ───────────────────────────────── */
-    .redflags-section {
-      background: #fff8f0;
-      border: 1px solid rgba(241,87,34,0.22);
-      border-radius: var(--radius-md);
-      padding: 16px 18px;
-      margin-bottom: 22px;
-      text-align: left;
-    }
-    .redflags-section__title {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-    .redflag-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--plum);
-      margin-bottom: 9px;
-      line-height: 1.45;
-      cursor: pointer;
-    }
-    .redflag-item:last-child { margin-bottom: 0; }
-    .redflag-item input[type="checkbox"] {
-      margin-top: 2px;
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-      accent-color: var(--orange);
-      cursor: pointer;
-    }
-
-    /* ─── URGENT BANNER (results screen) ────────────────────── */
-    .urgent-banner {
-      background: linear-gradient(135deg, #fff0f0, #ffe4e4);
-      border: 2px solid #e53935;
-      border-radius: var(--radius-xl);
-      padding: 28px 28px 24px;
-      max-width: 560px;
-      width: 100%;
-      margin-bottom: 24px;
-      animation: fadeUp 0.5s var(--ease-out) both;
-    }
-    .urgent-banner__title {
-      font-family: var(--font-head);
-      font-size: 18px;
-      font-weight: 700;
-      color: #c62828;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      line-height: 1.3;
-    }
-    .urgent-banner__title i { font-size: 22px; flex-shrink: 0; }
-    .urgent-banner__body {
-      font-size: 14px;
-      color: #5c1010;
-      line-height: 1.65;
-    }
-    .urgent-banner__body strong { color: #c62828; }
-
     /* ─── RESPONSIVE ─────────────────────────────────────────── */
     @media (max-width: 480px) {
       .question-card { padding: 28px 20px 24px; }
@@ -980,21 +910,6 @@
     <div class="result-card" id="result-card">
       <h3 class="result-card__title" id="result-title"></h3>
       <p class="result-card__body" id="result-body"></p>
-    </div>
-
-    <div id="redflags-container"></div>
-
-    <div class="urgent-banner" id="urgent-banner" style="display:none">
-      <p class="urgent-banner__title">
-        <i class="ph-bold ph-warning-octagon"></i>
-        Jedan ili više simptoma zahtijeva hitan pregled
-      </p>
-      <p class="urgent-banner__body">
-        Simptomi koje si označila mogu ukazivati na stanje koje zahtijeva
-        <strong>hitnu medicinsku procjenu</strong>. Molimo te da što prije
-        kontaktiraš svog ljekara ili posjetiš ginekološku hitnu —
-        ne čekaj sljedeći redovni termin.
-      </p>
     </div>
 
     <div class="freebie-box">
@@ -1167,15 +1082,6 @@
       ],
     },
   };
-
-  /* ─── RED FLAGS ──────────────────────────────────────────────── */
-  const RED_FLAGS = [
-    'Jak, iznenadan bol u zdjelici ili trbuhu',
-    'Menstruacija duža od 10 dana ili iznimno jako krvarenje',
-    'Izostanak perioda duže od 3 mjeseca (ako nisi trudna ili dojiš)',
-    'Brz i uočljiv porast dlačica u posljednjih 6 mjeseci',
-    'Česte epizode vrtoglavice, znojenja ili drhtanja tokom dana',
-  ];
 
   /* ─── STATE ──────────────────────────────────────────────────── */
   const state = {
@@ -1392,29 +1298,6 @@
        </a>`
     ).join('');
 
-    // Red flag checklist
-    const rfContainer = $('redflags-container');
-    rfContainer.innerHTML = `
-      <div class="redflags-section">
-        <p class="redflags-section__title">
-          <i class="ph-bold ph-warning"></i> Hitni znakovi upozorenja
-        </p>
-        <p style="font-size:12px;color:var(--plum);opacity:0.75;margin-bottom:12px;line-height:1.5">
-          Označi sve što ti se odnosi — ovi simptomi zahtijevaju hitan ginekološki pregled
-          bez obzira na rezultat kviza.
-        </p>
-        ${RED_FLAGS.map(f => `
-          <label class="redflag-item">
-            <input type="checkbox" class="redflag-check">
-            ${f}
-          </label>
-        `).join('')}
-      </div>
-    `;
-    rfContainer.addEventListener('change', () => {
-      const anyChecked = rfContainer.querySelectorAll('.redflag-check:checked').length > 0;
-      $('urgent-banner').style.display = anyChecked ? 'block' : 'none';
-    });
   }
 
   /* ─── EMAIL VALIDATION ───────────────────────────────────────── */
@@ -1477,9 +1360,6 @@
     btn.disabled = false;
     $('submit-text').innerHTML = 'Vidi moje rezultate <i class="ph-bold ph-arrow-right"></i>';
 
-    // Reset red flags
-    $('redflags-container').innerHTML = '';
-    $('urgent-banner').style.display = 'none';
 
     activateScreen('hero');
   }
