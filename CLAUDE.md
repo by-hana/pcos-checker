@@ -24,6 +24,25 @@ start pcos-checker.html       # Windows — opens in default browser
 - Branch: `main`
 - Commit with conventional-commit prefixes: `feat:`, `fix:`, `style:`, `refactor:`, `docs:`
 
+**Commit and push after every meaningful change.** This is non-negotiable — no work should exist only on disk. After completing any task (new feature, bug fix, copy change, style tweak), stage the relevant files, write a descriptive commit message, and push to `origin main` before considering the task done.
+
+Commit message format:
+```
+<type>: <short imperative summary>
+
+<optional body — what changed and why, if not obvious>
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+```
+
+Examples of good commit messages:
+- `fix: correct score boundary — score 9 now maps to Srednji not Nizak`
+- `style: increase answer button tap target to 48px on mobile`
+- `feat: add conditional CTA copy for high-risk result screen`
+- `refactor: extract RISK_CONTENT into separate const block`
+
+Never batch unrelated changes into one commit. One logical change = one commit.
+
 ## Architecture
 
 Everything lives in `pcos-checker.html` in three sections:
