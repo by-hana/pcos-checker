@@ -133,7 +133,7 @@
         0 0 0 22px rgba(202,186,215,0.07);
       animation: fadeUp 0.6s var(--ease-out) 0.1s both;
     }
-    .hero__decoration i { font-size: 42px; color: var(--plum-dark); }
+    .hero__decoration svg { color: var(--plum-dark); }
 
     .hero__tag {
       font-size: 11px;
@@ -882,7 +882,18 @@
   <!-- ── SCREEN 1: HERO ───────────────────────────────────────── -->
   <section id="screen-hero" class="screen screen--active" role="main">
     <div class="hero__decoration">
-      <i class="ph-bold ph-flower-lotus"></i>
+      <svg width="54" height="50" viewBox="0 0 54 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Uterus body -->
+        <path d="M21 29C21 29 18.5 23 18.5 18.5C18.5 13.8 22 10.5 27 10.5C32 10.5 35.5 13.8 35.5 18.5C35.5 23 33 29 33 29L31 37.5C31 39.4 29.2 41 27 41C24.8 41 23 39.4 23 37.5Z" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Left fallopian tube -->
+        <path d="M21 20C17 19 13 20.5 10 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        <!-- Left ovary -->
+        <ellipse cx="7" cy="15.5" rx="4.5" ry="3" stroke="currentColor" stroke-width="2.2"/>
+        <!-- Right fallopian tube -->
+        <path d="M33 20C37 19 41 20.5 44 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        <!-- Right ovary -->
+        <ellipse cx="47" cy="15.5" rx="4.5" ry="3" stroke="currentColor" stroke-width="2.2"/>
+      </svg>
     </div>
     <span class="hero__tag">Besplatna provjera · 2 minute</span>
     <h1 class="hero__title">
